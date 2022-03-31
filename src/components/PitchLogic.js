@@ -13,6 +13,21 @@ export const letterNames = {
     11: 'A-sharp',
 }
 
+export const harmony = {
+    0: 'perfect',
+    1: 'dissonance',
+    2: 'imperfect',
+    3: 'imperfect',
+    4: 'imperfect',
+    5: 'perfect',
+    6: 'dissonance',
+    7: 'perfect',
+    8: 'imperfect',
+    9: 'imperfect',
+    10: 'imperfect',
+    11: 'dissonance'
+}
+
 
 export class Pitch {
     // constructor expects to receive an integer representing a pitch
@@ -91,6 +106,7 @@ export class Sequence {
     // Sequence expects that each cantus is the same length
     constructor(cantii) {
         this.sequence = cantii;
+        this.sonorities = null;
     }
 
     getSequence() {
@@ -111,6 +127,23 @@ export class Sequence {
             output.push(<p>{cantus.returnLetters()}</p>);
         }
         return output;
+    }
+
+    getSonorities() {
+        // output is an array containing sonorities as raw, inner arrays
+        const output = [];
+        for (let i = 0; i < this.sequence[0].melody.length; i++) {
+            let thing = [];
+            for (let each of this.sequence) {
+                thing.push(each.melody[i].note);
+            }
+            output.push(thing);
+        }
+        console.log(output);
+    }
+
+    evaluate() {
+        
     }
 }
 

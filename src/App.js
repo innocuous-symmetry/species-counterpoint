@@ -12,6 +12,8 @@ function App() {
     return newFirmus;
   }
 
+  mySequence.getSonorities();
+
   return (
     <div className="App">
       <h1>Procedural Music Generation with Javascript</h1>
