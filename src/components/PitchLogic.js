@@ -46,7 +46,7 @@ export class Pitch {
 
 
 export class Cantus {
-    constructor(...notes) {
+    constructor(notes) {
         this.melody = notes;
     }
 
@@ -56,7 +56,7 @@ export class Cantus {
 
     returnLetters() {
         let output = [];
-        for (let pitch of this.melody[0]) {
+        for (let pitch of this.melody) {
             let reduced = pitch.getNote() % 12;
             output.push(`${letterNames[reduced]} `);
         }
@@ -68,8 +68,8 @@ export class Cantus {
 
 export class Sonority {
     // constructor receives an array of Pitch class objects
-    constructor([...notes]) {
-        this.sonority = [...notes];
+    constructor(notes) {
+        this.sonority = notes;
         this.numVoices = null;
         this.consonance = null;
         this.harmonicPull = null;
@@ -87,27 +87,45 @@ export class Sonority {
 
 
 export class Sequence {
-    constructor(...cantii) {
-        this.sequence = [...cantii];
+    // constructor receives an array of cantii; those at higher indices will be placed at higher pitch levels
+    // Sequence expects that each cantus is the same length
+    constructor(cantii) {
+        this.sequence = cantii;
     }
 
     getSequence() {
         return this.sequence;
     }
+
+    checkLength() {
+        const lens = [];
+        for (let cantus of this.sequence) {
+            lens.push(cantus.melody.length);
+        }
+        return lens.reduce((a,b) => (a === b ? true : new Error("Length is not the same")));
+    }
+
+    mapLayers() {
+        let output = [];
+        for (let cantus of this.sequence) {
+            output.push(<p>{cantus.returnLetters()}</p>);
+        }
+        return output;
+    }
 }
 
+const cantusHelper = (arr) => {
+    let mappedArray = [];
+    for (let each of arr) {
+        mappedArray.push(new Pitch(each));
+    }
+    return mappedArray;
+}
 
+const cantusPitches = cantusHelper([3,6,5,3,8,6,10,8,6,5,3]);
+export const cantusFirmus = new Cantus(cantusPitches);
 
-export const cantusFirmus = new Cantus([
-    new Pitch(3),   // D
-    new Pitch(6),   // F
-    new Pitch(5),   // E
-    new Pitch(3),   // D
-    new Pitch(8),   // G
-    new Pitch(6),   // F
-    new Pitch(10),  // A
-    new Pitch(8),   // G
-    new Pitch(6),   // F
-    new Pitch(5),   // E
-    new Pitch(3)    // D
-]);
+const solutionPitches = cantusHelper([10,10,8,10,12,1,1,12,3,2,3])
+export const cantusSolution = new Cantus(solutionPitches);
+
+export const mySequence = new Sequence([cantusFirmus, cantusSolution]);

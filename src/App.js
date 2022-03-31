@@ -1,5 +1,5 @@
 import './App.css';
-import { cantusFirmus, Pitch } from './components/PitchLogic';
+import { cantusFirmus, Pitch, mySequence } from './components/PitchLogic';
 
 function App() {
   const handleTranspose = (cantus, amount) => {
@@ -22,6 +22,9 @@ function App() {
 
       <h4>Cantus Firmus:</h4>
       <p className="monospaced">{cantusFirmus.returnLetters()}</p>
+      
+      <h4>The provided solution:</h4>
+      <div>{mySequence.mapLayers()}</div>
     </div>
   );
 }
