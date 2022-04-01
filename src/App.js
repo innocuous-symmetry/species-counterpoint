@@ -1,17 +1,7 @@
 import './App.css';
-import { cantusFirmus, Pitch, mySequence } from './components/PitchLogic';
+import { cantusFirmus, mySequence } from './components/Instances';
 
 function App() {
-  const handleTranspose = (cantus, amount) => {
-    let newFirmus = [];
-    for (let pitch of cantus) {
-      const thing = new Pitch(pitch.getNote() + amount);
-      newFirmus.push(thing);
-    }
-    console.log(newFirmus);
-    return newFirmus;
-  }
-
   mySequence.getSonorities();
 
   return (
